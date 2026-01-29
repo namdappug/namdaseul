@@ -1,12 +1,11 @@
 /* ===============================
-   SUBPAGE2 : ONEPAGE + MENU + ARROW + TOP
+   SUBPAGE2 : ONEPAGE + MENU + TOPBAR + TOP
    - 모달/팝업 없음
-   - 꼬임 방지: 상태(page/transform/scroll) 항상 같이 관리
+   - 상태(page/transform/scroll) 같이 관리
 =============================== */
 
 const wrap = document.getElementById("wrap");
 const firstSection = document.getElementById("firstSection");
-const pageArrow = document.getElementById("pageArrow");
 const backToTop = document.getElementById("backToTop");
 
 if(!wrap || !firstSection){
@@ -22,20 +21,25 @@ if(!wrap || !firstSection){
     return firstSection.offsetTop + firstSection.offsetHeight;
   }
 
+  function inOnepage(){
+    return window.scrollY >= getThreshold() - 2;
+  }
+
   function updateBackToTop(){
     if(!backToTop) return;
-    const inOnepage = window.scrollY >= getThreshold() - 2;
-    // ✅ 원페이지 2번째부터 보이기 (page=1부터)
-    backToTop.classList.toggle("is-show", inOnepage && page >= 1);
+    backToTop.classList.toggle("is-show", inOnepage() && page >= 1);
+  }
+
+  function syncUI(){
+    updateBackToTop();
   }
 
   function goToOnepage(){
-    // first-section → 원페이지 진입(항상 page=0)
     const threshold = getThreshold();
     page = 0;
     wrap.style.transform = "translateY(0)";
     window.scrollTo({ top: threshold, behavior: "smooth" });
-    setTimeout(updateBackToTop, 30);
+    setTimeout(syncUI, 30);
   }
 
   function moveSlider(){
@@ -47,7 +51,7 @@ if(!wrap || !firstSection){
 
     setTimeout(()=>{
       isAnimating = false;
-      updateBackToTop();
+      syncUI();
     }, 650);
   }
 
@@ -57,15 +61,20 @@ if(!wrap || !firstSection){
 
     page = 0;
     wrap.style.transform = "translateY(0)";
-    updateBackToTop(); // 먼저 숨김
+    syncUI(); // 먼저 UI 갱신
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
     setTimeout(()=>{ isAnimating = false; }, 700);
   }
 
-  // ✅ 휠 스크롤 (원본 로직 최대한 유지)
+  /* ===============================
+     ✅ Wheel Control
+  =============================== */
   window.addEventListener("wheel", (e)=>{
+    // ✅ 메뉴 열려있으면 원페이지 휠 제어하지 말고 그냥 통과
+    if(document.body.classList.contains("menu-open")) return;
+
     const threshold = getThreshold();
     const currentScroll = window.scrollY;
 
@@ -110,30 +119,30 @@ if(!wrap || !firstSection){
 
         page = 0;
         wrap.style.transform = "translateY(0)";
-        updateBackToTop();
+        syncUI();
 
         setTimeout(()=>{ isAnimating = false; }, 650);
       }
     }
   }, { passive:false });
 
-  // 리사이즈 보정
+  /* ✅ 리사이즈 보정 */
   window.addEventListener("resize", ()=>{
     const threshold = getThreshold();
     if(window.scrollY >= threshold){
       window.scrollTo(0, threshold);
       wrap.style.transform = `translateY(${-page * 100}vh)`;
     }
-    updateBackToTop();
+    syncUI();
   });
 
-  // Top 버튼 클릭
+  /* ✅ backToTop */
   if(backToTop){
     backToTop.addEventListener("click", resetToTop);
   }
 
-  // 초기 반영
-  updateBackToTop();
+  /* 초기 반영 */
+  syncUI();
 }
 
 /* ===============================
@@ -168,4 +177,3 @@ menuOverlay && menuOverlay.addEventListener("click", closeMenu);
 window.addEventListener("keydown", (e)=>{
   if(e.key === "Escape") closeMenu();
 });
-

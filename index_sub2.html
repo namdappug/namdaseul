@@ -4,35 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>자기소개서_남다슬</title>
-
   <link rel="stylesheet" href="subpage2.css" />
 </head>
 
 <body>
-  <div class="frame">
 
-    <!-- FIRST IMAGE -->
+  <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
+  <nav class="menu-panel" id="menuPanel" aria-label="Site Menu">
+    <button class="menu-close" type="button" aria-label="Close menu">×</button>
+    <a href="index.html" class="menu-item">HOME</a>
+    <a href="index_sub.html" class="menu-item">PORTFOLIO</a>
+    <a href="index_sub2.html" class="menu-item">SELF INTRODUCTION</a>
+  </nav>
+
+  <div class="frame">
+    <!-- about1-1: topbar는 해당 자리(상단)에만 있고, 스크롤 내리면 같이 올라감 -->
     <section class="first-section" id="firstSection">
+      <header class="topbar" aria-label="Top Navigation">
+        <a class="topbar-back" href="index.html" aria-label="Back to Home"></a>
+        <button class="topbar-burger" type="button" aria-label="Open menu" aria-expanded="false"></button>
+      </header>
       <img src="image/aboutme_1-1.jpg" alt="aboutme_1">
     </section>
 
-    <!-- ✅ TOP BAR (Back + Burger) -->
-    <header class="topbar" aria-label="Top Navigation">
-      <a class="topbar-back" href="index.html" aria-label="Back to Home"></a>
-      <button class="topbar-burger" type="button" aria-label="Open menu" aria-expanded="false"></button>
-    </header>
-
-    <!-- ✅ HAMBURGER MENU -->
-    <div class="menu-overlay" id="menuOverlay" aria-hidden="true"></div>
-
-    <nav class="menu-panel" id="menuPanel" aria-label="Site Menu">
-      <button class="menu-close" type="button" aria-label="Close menu">×</button>
-      <a href="index.html" class="menu-item">HOME</a>
-      <a href="index_sub.html" class="menu-item">PORTFOLIO</a>
-      <a href="index_sub2.html" class="menu-item">SELF INTRODUCTION</a>
-    </nav>
-
-    <!-- ONEPAGE -->
     <section class="onepage-container" id="onepageContainer">
       <div class="wrap" id="wrap">
         <div class="section"><img src="image/aboutme_2.jpg" alt="aboutme_2"></div>
@@ -46,7 +40,7 @@
 
   </div>
 
-  <!-- 🔼 BACK TO TOP -->
+  <!-- ✅ BACK TO TOP: body 직속 -->
   <button class="back-to-top" id="backToTop" aria-label="맨 위로 이동"></button>
 
   <script src="subpage2.js"></script>
