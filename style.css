@@ -1,0 +1,406 @@
+/* =========================
+   RESET + BODY
+========================= */
+*{margin:0; padding:0; box-sizing:border-box;}
+
+body{
+  background:#fdfeb2;
+  overflow-x:hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23599eeb" opacity="0.8"/><circle cx="12" cy="12" r="6" fill="%23599eeb"/></svg>') 12 12, auto;
+}
+
+/* hover 가능한 요소에 hover 시 흰색 원형 커서 */
+a, button, .hotspot, .rolling-box{
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="white" opacity="0.5"/><circle cx="12" cy="12" r="6" fill="white" opacity="0.5"/></svg>') 12 12, pointer;
+}
+
+/* =========================
+   STAGE
+========================= */
+.stage{
+  width:1920px;
+  margin:0 auto;
+  background:#fdfeb2;
+  position:relative;
+  padding-right:40px;
+}
+
+.stack{font-size:0; line-height:0;}
+
+/* =========================
+   SLICE REVEAL
+========================= */
+.slice{
+  width:100%;
+  height:auto;
+  display:block;
+  opacity:0;
+  transform:translateY(70px);
+  transition:opacity .7s ease-out, transform .7s ease-out;
+  will-change:opacity, transform;
+}
+.slice.is-in{opacity:1; transform:translateY(0);}
+
+.slice[src*="images_13_05"]{
+  transition:opacity .75s ease-out, transform .75s ease-out;
+}
+
+/* footer (images_11/12) 항상 표시 */
+.slice[src*="images_11"],
+.slice[src*="images_12"]{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* images_11 배경 항상 표시 */
+.images-11-bg{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+  width:100%;
+  display:block;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .slice{transition:none; transform:none; opacity:1;}
+}
+
+/* =========================
+   WRAPS
+========================= */
+.slice-wrap{position:relative; width:100%;}
+.slice-wrap > img{display:block;}
+
+/* images_04 wrap */
+.images-04-wrap{
+  position:relative;
+  width:100%;
+  left:55%;
+  transform:translateX(-55%);
+}
+.images-04-wrap > .slice{position:relative; transform:translateY(70px);}
+.images-04-wrap > .slice.is-in{transform:translateY(0);}
+
+/* images_04 V 스티커(좌우반전) */
+.images-04-wrap .v-sticker-reverse{
+  position:absolute;
+  left:58%;
+  top:38%;
+  width:160px;
+  height:auto;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(-100px) rotate(15deg);
+  transform-origin:50% 50%;
+  opacity:0;
+  transition: opacity .6s ease-out, transform .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index:20;
+}
+.images-04-wrap.is-in .v-sticker-reverse{
+  opacity:1;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(0) rotate(8deg);
+  transition-delay:.3s;
+}
+
+/* underline */
+.pink-underline-box{
+  position:absolute;
+  left:30%;
+  top:86%;
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin:left center;
+  width:1020px;
+  height:30px;
+  background:#febde9;
+  opacity:.6;
+  z-index:15;
+  pointer-events:none;
+  margin-top:-15px;
+  transition: transform .8s ease-out;
+}
+.images-04-wrap.is-in .pink-underline-box{
+  transform: translate(-50%, -50%) scaleX(1);
+  transition-delay:.3s;
+}
+
+/* =========================
+   HERO STICKER
+========================= */
+.hero-wrap{position:relative; width:100%;}
+.hero-wrap > img{display:block;}
+
+.hero-sticker{
+  position:absolute;
+  left:65%;
+  top:50%;
+  width:195px;
+  height:195px;
+  transform:translate(-50%, -50%);
+  transform-origin:50% 50%;
+  animation: spin 6s linear infinite;
+  pointer-events:none;
+  z-index:20;
+  will-change:transform;
+}
+@keyframes spin{
+  from{ transform: translate(-50%, -50%) rotate(0deg); }
+  to  { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* =========================
+   PHOTO WRAP V STICKER
+========================= */
+.photo-wrap{position:relative; width:100%;}
+.photo-wrap > img{display:block;}
+
+.v-sticker{
+  position:absolute;
+  left:67%;
+  top:60%;
+  width:90px;
+  height:auto;
+  transform: translate(-50%, -50%) translateY(-100px) rotate(-15deg);
+  transform-origin:50% 50%;
+  opacity:0;
+  transition: opacity .6s ease-out, transform .6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index:50;
+}
+.photo-wrap.is-in .v-sticker{
+  opacity:1;
+  transform: translate(-50%, -50%) translateY(0) rotate(-8deg);
+  transition-delay:.3s;
+}
+
+
+/* =========================
+   ROLLING (CAROUSEL)
+========================= */
+.rolling-box{
+  position:absolute;
+  left:669px;
+  top:895px;
+  width:570px;
+  height:445px;
+  background:transparent;
+  overflow:hidden;
+  z-index:30;
+  pointer-events:auto;
+}
+
+.rolling-box-2{
+  left:669px;
+  top:1600px;
+  width:570px;
+  height:445px;
+}
+.rolling-box-2 .rolling-slide img{ object-position:center 20%; }
+
+.rolling-viewport{width:100%; height:100%; overflow:hidden;}
+.rolling-track{
+  display:flex;
+  height:100%;
+  transform:translateX(0);
+  transition:transform 700ms ease;
+  will-change:transform;
+}
+.rolling-slide{flex:0 0 100%; height:100%;}
+.rolling-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* rolling 버튼 */
+.rolling-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:rgba(255,255,255,0.3);
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  font-size:26px;
+  line-height:42px;
+  opacity:0;
+  transition:opacity .2s ease, transform .15s ease;
+}
+.rolling-box:hover .rolling-btn{opacity:1;}
+.rolling-btn.prev{left:10px;}
+.rolling-btn.next{right:10px;}
+.rolling-btn:active{transform:translateY(-50%) scale(0.96);}
+
+/* rolling reveal sync */
+.rolling-box.reveal-sync{
+  opacity:0;
+  transform:translateY(70px);
+  transition: opacity .8s ease-out, transform .8s ease-out;
+  will-change:opacity, transform;
+  transition-delay:.5s;
+}
+.rolling-box.reveal-sync.is-in{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* =========================
+   images_11 GOOD VIBES MARQUEE
+========================= */
+.images-11-wrap{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+}
+
+.goodvibes-marquee{
+  position:absolute;
+  left:0;
+  bottom:10px;
+  width:100%;
+  overflow:hidden;
+  z-index:20;
+}
+
+.goodvibes-track{
+  display:flex;
+  width:max-content;
+  animation: goodvibes-scroll 50s linear infinite;
+}
+.goodvibes-track img{
+  height:48px;
+  margin-right:50px;
+  display:block;
+}
+
+@keyframes goodvibes-scroll{
+  from{ transform:translateX(0); }
+  to  { transform:translateX(-50%); }
+}
+
+/* =========================
+images_13_05 HOTSPOT (최종)
+========================= */
+
+/* 기준 컨테이너 */
+
+/* 공통 hotspot */
+.photo-hotspot{
+  position:absolute;
+  display:block;
+  pointer-events:auto;
+  z-index:9999;
+
+  /* 🔥 반드시 있어야 클릭됨 */
+  width:360px;
+  height:360px;
+}
+
+/* PROJECT : 가운데 */
+.photo-hotspot.hs-project{
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+}
+
+/* ABOUT : 오른쪽 */
+.photo-hotspot.hs-about{
+  right:120px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+/* 🔹 공통 hotspot */
+.photo-hotspot{
+  position:absolute;
+  display:block;
+  pointer-events:auto;
+  z-index:9999;
+
+  width:360px;
+  height:360px;
+}
+
+/* 🔹 화살표 기본값(여기만 만지면 크기 조절 끝) */
+.photo-hotspot{
+  --arrow-size: 15px;     /* ✅ 화살표 크기 */
+  --arrow-stroke: 5px;    /* ✅ 선 두께 */
+  --arrow-scale: 1;       /* 기본 스케일 */
+  --arrow-scale-hover: 1.3;
+}
+
+/* 🔹 화살표 */
+.photo-hotspot::after{
+  content:"";
+  position:absolute;
+
+  width:var(--arrow-size);
+  height:var(--arrow-size);
+  border-top:var(--arrow-stroke) solid #599eeb;
+  border-right:var(--arrow-stroke) solid #599eeb;
+
+  /* ✅ 위치 고정 핵심 */
+  transform-origin: top right;
+
+  transform: rotate(45deg) scale(var(--arrow-scale));
+  opacity:0;
+
+  transition:
+    opacity .3s ease,
+    transform .25s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* hover 스케일만 변경 */
+.photo-hotspot:hover::after{
+  transform: rotate(45deg) scale(var(--arrow-scale-hover));
+}
+
+/* 등장 타이밍 */
+.photo-wrap.is-in .photo-hotspot::after{
+  opacity:1;
+  transition-delay:1.5s;
+}
+
+/* 기존 위치값은 그대로 유지 */
+.photo-hotspot.hs-project::after{
+  top:-320px;
+  right:125px;
+}
+
+.photo-hotspot.hs-about::after{
+  top:-320px;
+  right:-30px;
+}
+
+
+/* 🔧 위치 잡을 때만 쓰는 디버그 (확인 후 삭제 가능) */
+/*
+.photo-hotspot{
+  outline:2px dashed magenta;
+  background:rgba(255,0,255,.08);
+}
+/* =========================
+   images_12 NAME (RIGHT)
+========================= */
+.slice-wrap{
+  position:relative; /* 기준 */
+}
+
+.image12-name{
+  position:absolute;
+  right:110px;        /* 👉 오른쪽 위치 (여기만 조절) */
+  top:94.2%;
+  transform:translateY(-50%);
+
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size:20px;
+  font-weight:500;
+  letter-spacing:0.08em;
+  color:#599eeb;
+
+  white-space:nowrap;
+  pointer-events:none; /* 클릭 방해 X */
+  z-index:30;
+}
+
