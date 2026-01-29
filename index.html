@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>개인사이트_남다슬</title>
+
+   <!-- ✅ 분리 CSS 연결 -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <main class="stage">
+    <div class="stack">
+
+      <div class="hero-wrap">
+        <img class="slice" src="./image/images/images_01.jpg" alt="">
+        <img class="hero-sticker" src="./image/main_sticker.png" alt="">
+      </div>
+
+      <!-- ✅ images_02 위에 롤링 박스 얹기 -->
+      <div class="slice-wrap slice-02">
+        <img class="slice" src="./image/images/images_02.jpg" alt="">
+
+        <!-- ✅ 롤링 캐러셀 -->
+        <div class="rolling-box reveal-sync" id="rollingBox" aria-label="rolling gallery">
+          <div class="rolling-viewport">
+            <div class="rolling-track" id="rollingTrack">
+              <!-- 🔥 사진 4개 경로만 바꾸세요 -->
+              <div class="rolling-slide"><img src="./image/pink_1.jpg" alt=""></div>
+              <div class="rolling-slide"><img src="./image/pink_2.jpg" alt=""></div>
+              <div class="rolling-slide"><img src="./image/pink_3.jpg" alt=""></div>
+              <div class="rolling-slide"><img src="./image/pink_4.jpg" alt=""></div>
+            </div>
+          </div>
+          <button class="rolling-btn prev" type="button" aria-label="prev" id="rollingPrev">‹</button>
+          <button class="rolling-btn next" type="button" aria-label="next" id="rollingNext">›</button>
+        </div>
+      </div>
+<!-- ✅ 롤링 캐러셀 (2) : 사진 3개 -->
+<div class="rolling-box rolling-box-2  reveal-sync" id="rollingBox2" aria-label="rolling gallery 2">
+  <div class="rolling-viewport">
+    <div class="rolling-track" id="rollingTrack2">
+      <div class="rolling-slide"><img src="./image/blue_1.jpg" alt=""></div>
+      <div class="rolling-slide"><img src="./image/blue_2.jpg" alt=""></div>
+      <div class="rolling-slide"><img src="./image/blue_3.jpg" alt=""></div>
+    </div>
+  </div>
+
+  <button class="rolling-btn prev" type="button" aria-label="prev" id="rollingPrev2">‹</button>
+  <button class="rolling-btn next" type="button" aria-label="next" id="rollingNext2">›</button>
+</div>
+      <img class="slice" src="./image/images/images_03.jpg" alt="">
+
+      <div class="images-04-wrap">
+        <img class="slice" src="./image/images/images_04.jpg" alt="">
+        <img class="v-sticker-reverse" src="./image/v.png" alt="V">
+        <div class="pink-underline-box"></div>
+      </div>
+
+<div class="photo-wrap">
+  <img class="slice" src="./image/images/images_13_05.jpg" alt="">
+  <img class="v-sticker" src="./image/v.png" alt="V">
+
+  <!-- PROJECT (가운데) -->
+  <a class="photo-hotspot hs-project"
+     href="index_sub.html"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Project"></a>
+
+  <!-- ABOUT (오른쪽) -->
+  <a class="photo-hotspot hs-about"
+     href="index_sub2.html"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="About"></a>
+
+  <!-- 작업 모아보기 / 이야기 모아보기 (시안) -->
+  <a class="collect-link collect-works" href="index_sub.html" target="_blank" rel="noopener noreferrer">
+    <span class="collect-text">작업 모아보기</span>
+    <img class="collect-arrow" src="./image/arrow2.png" alt="">
+  </a>
+  <a class="collect-link collect-story" href="index_sub2.html" target="_blank" rel="noopener noreferrer">
+    <span class="collect-text">이야기 모아보기</span>
+    <img class="collect-arrow" src="./image/arrow2.png" alt="">
+  </a>
+</div>
+</div>
+
+
+<!-- ✅ images_11 : GOOD VIBES 롤링 영역 -->
+<div class="slice images-11-wrap">
+  <img class="images-11-bg" src="./image/images/images_11.jpg" alt="">
+
+  <!-- 가로 롤링 텍스트 -->
+  <div class="goodvibes-marquee">
+    <div class="goodvibes-track">
+      <!-- 같은 이미지 여러 번 (끊김 방지) -->
+      <img src="./image/designwithgoodvibe.png" alt="">
+      <img src="./image/designwithgoodvibe.png" alt="">
+      <img src="./image/designwithgoodvibe.png" alt="">
+      <img src="./image/designwithgoodvibe.png" alt="">
+    </div>
+  </div>
+</div>
+      <img class="slice" src="./image/images/images_12.jpg" alt="">
+      <span class="image12-name">NAM DASEUL</span>
+    </div>
+
+
+  </main>
+
+  <!-- ✅ 분리 JS 연결 (맨 아래) -->
+  <script src="./main.js"></script>
+</body>
+</html>

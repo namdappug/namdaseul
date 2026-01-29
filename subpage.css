@@ -1,0 +1,456 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* =========================
+   핵심 설정
+========================= */
+html, body{ overflow-x:hidden; }
+
+body::-webkit-scrollbar{display:none;}
+body{
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23599eeb" opacity="0.8"/><circle cx="12" cy="12" r="6" fill="%23599eeb"/></svg>') 12 12, auto;
+}
+
+/* index와 동일한 hover 커서 */
+a, button{
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="white" opacity="0.5"/><circle cx="12" cy="12" r="6" fill="white" opacity="0.5"/></svg>') 12 12, pointer;
+}
+
+/* =========================
+   1920 프레임 (가운데 기준 클리핑)
+========================= */
+.frame1920{
+  position:relative;
+  width:1920px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* =========================
+   FIRST SECTION
+========================= */
+.first-section{
+  width:1920px;
+  position:relative;
+  z-index:1;
+}
+
+/* ❗ 절대 width:100% 쓰지 말 것 */
+.first-section img{
+  width:1920px;
+  height:auto;
+  display:block;
+}
+
+/* =========================
+   NAV (첫 이미지 안 / 고정)
+========================= */
+.project-nav{
+  position:absolute;
+  top:320px;
+  left:0;
+  width:1920px;
+  z-index:9999;
+}
+
+.nav-inner{
+  width:1920px;
+  padding:0 80px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  font-family:'Noto Sans KR', sans-serif;
+  font-size:30px;
+  font-weight:500;
+  letter-spacing:0.02em;
+}
+
+.nav-inner a{
+  color:#FDFEB2;
+  text-decoration:none;
+  transition:opacity .2s ease;
+}
+
+.nav-inner a:hover{ color: azure; }
+
+/* =========================
+   ONEPAGE SECTION
+========================= */
+.onepage-container{
+  width:1920px;
+  height:100vh;
+  overflow:hidden;
+  position:relative;
+  z-index:2;
+}
+
+.wrap{
+  width:100%;
+  height:100%;
+  transition:transform .6s cubic-bezier(0.45,0.05,0.55,0.95);
+  will-change:transform;
+}
+
+.section{
+  width:100%;
+  height:100vh;
+  position: relative;
+}
+
+.section img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* =========================
+   TOP BAR (Back + Burger)
+========================= */
+.topbar{
+  position:absolute;
+  top:0;
+  left:0;
+  width:1920px;
+  height:120px;
+  z-index:10000;
+}
+
+/* 뒤로가기(좌측) */
+.topbar-back{
+  position:absolute;
+  left:60px;
+  top:40px;
+  width:60px;
+  height:40px;
+  display:block;
+}
+
+.topbar-back::before{
+  content:"";
+  position:absolute;
+  left:8px;
+  top:50%;
+  width:18px;
+  height:18px;
+  border-left:6px solid #FDFEB2;
+  border-bottom:6px solid #FDFEB2;
+  transform:translateY(-50%) rotate(45deg);
+}
+
+/* 햄버거(우측) */
+.topbar-burger{
+  position:absolute;
+  right:60px;
+  top:36px;
+  width:64px;
+  height:48px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+}
+
+.topbar-burger::before,
+.topbar-burger::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  height:6px;
+  background:#FDFEB2;
+  border-radius:2px;
+}
+.topbar-burger::before{ top:10px; }
+.topbar-burger::after { top:32px; }
+
+.topbar-burger span{ display:none; }
+.topbar-burger{
+  background:linear-gradient(#FDFEB2, #FDFEB2) center 21px / 100% 6px no-repeat;
+}
+
+/* =========================
+   MENU (Overlay + Panel)
+========================= */
+.menu-overlay{
+  position:absolute;
+  inset:0;
+  width:1920px;
+  height:100%;
+  background:rgba(0,0,0,.35);
+  opacity:0;
+  pointer-events:none;
+  z-index:10001;
+  transition:opacity .2s ease;
+}
+
+.menu-panel{
+  position:absolute;
+  top:0;
+  right:-520px;
+  width:520px;
+  height:100%;
+  background:#5D97D8;
+  border-left:2px solid rgba(253,254,178,.9);
+  z-index:10002;
+
+  padding:140px 60px 60px;
+  transition:right .25s ease;
+}
+
+.menu-close{
+  position:absolute;
+  top:36px;
+  right:50px;
+  width:56px;
+  height:56px;
+  border:0;
+  background:transparent;
+  color:#FDFEB2;
+  font-size:44px;
+  cursor:pointer;
+}
+
+.menu-item{
+  display:block;
+  font-family:'Noto Sans KR', sans-serif;
+  font-size:34px;
+  font-weight:500;
+  letter-spacing:0.02em;
+  color:#FDFEB2;
+  text-decoration:none;
+  padding:18px 0;
+  opacity:.9;
+}
+.menu-item:hover{ opacity:1; }
+
+/* 열림 상태 */
+.menu-open .menu-overlay{
+  opacity:1;
+  pointer-events:auto;
+}
+.menu-open .menu-panel{
+  right:0;
+}
+
+/* ✅ 왼쪽 하단 버튼 랩 */
+.cta-wrap{
+  position:absolute;
+  left:90px;
+  bottom:90px;
+  display:flex;
+  gap:22px;
+  z-index:9999;
+  pointer-events:auto;
+}
+
+.cta-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  width:220px;
+  height:55px;
+
+  border-radius:999px;
+  font-family:'Noto Sans KR', sans-serif;
+  font-size:24px;
+  font-weight:390;
+  letter-spacing:0.02em;
+  text-decoration:none;
+
+  border:2px solid #FDFEB2;
+  transition:opacity .2s ease, transform .2s ease;
+}
+
+/* 왼쪽 버튼(라인) */
+.cta-btn.outline{
+  color:#FDFEB2;
+  background:transparent;
+  opacity:.95;
+}
+
+/* 오른쪽 버튼(채움) */
+.cta-btn.fill{
+  color:#5D97D8;
+  background:#FDFEB2;
+  opacity:1;
+}
+
+.cta-btn:hover{
+  opacity:1;
+  transform:translateY(-2px);
+}
+
+/* ✅ first-section에도 오버레이 가능하게 */
+.first-section{ position:relative; }
+
+/* ✅ WEBSITE 페이지 전용 버튼 위치 */
+.first-section .cta-wrap{
+  left:80px;
+  bottom:100px;
+}
+
+/* =========================
+   PAGE DOWN ARROW
+========================= */
+.page-arrow{
+  position:fixed;
+  left:50%;
+  bottom:40px;
+  transform:translateX(-50%) rotate(45deg);
+
+  width:22px;
+  height:22px;
+
+  border-right:4px solid #FDFEB2;
+  border-bottom:4px solid #FDFEB2;
+
+  z-index:15000;
+  cursor:pointer;
+  opacity:.5;
+
+  animation:arrowBounce 1.4s infinite ease-in-out;
+}
+
+@keyframes arrowBounce{
+  0%{ transform:translate(-50%, 0) rotate(45deg); }
+  50%{ transform:translate(-50%, 8px) rotate(45deg); }
+  100%{ transform:translate(-50%, 0) rotate(45deg); }
+}
+
+/* =========================
+   DETAIL MODAL (긴 이미지 스크롤)
+========================= */
+.detail-modal{
+  position:fixed;
+  inset:0;
+  z-index:22000;
+  display:none;
+}
+.detail-modal.is-open{ display:block; }
+
+.detail-dim{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.65);
+}
+
+.detail-dialog{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+
+  width:min(1000px, calc(100vw - 120px));
+  height:85vh;
+
+  background:#fff;
+  border-radius:2px;
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.detail-close{
+  position:absolute;
+  top:16px;
+  right:18px;
+  width:48px;
+  height:48px;
+  border:0;
+  border-radius:999px;
+  background:rgba(83, 135, 196, 0.55);
+  color:#fff;
+  font-size:34px;
+  line-height:1;
+  cursor:pointer;
+  z-index:2;
+}
+
+/* ✅ 팝업 안에서 스크롤 */
+.detail-body{
+  height:100%;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  background:#5D97d8;
+}
+
+/* ✅ 핵심: 긴 이미지면 높이가 생겨서 스크롤 가능 */
+.detail-body img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+body.modal-lock{ overflow:hidden; }
+
+/* =========================
+   DETAIL MODAL SCROLLBAR
+========================= */
+
+/* Chrome / Edge / Safari */
+.detail-body::-webkit-scrollbar{
+  width:10px;
+}
+
+.detail-body::-webkit-scrollbar-track{
+  background:#5D97D8;          /* ✅ 스크롤 배경 */
+}
+
+.detail-body::-webkit-scrollbar-thumb{
+  background:rgba(253,254,178,.7);
+}
+.detail-body::-webkit-scrollbar-thumb:hover{
+  background:#ffffff;
+}
+
+/* Firefox */
+.detail-body{
+  scrollbar-width:thin;
+  scrollbar-color:#ffffff #5D97D8; /* thumb / track */
+}
+/* =========================
+   BACK TO TOP BUTTON
+========================= */
+.back-to-top{
+  position:fixed;
+  right:60px;
+  bottom:60px;
+
+  width:64px;
+  height:64px;
+  border-radius:50%;
+
+  background:rgba(253,254,178,0.95);
+  border:2px solid #FDFEB2;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  z-index:16000;
+
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
+}
+
+.back-to-top::before{
+  content:"";
+  width:18px;
+  height:18px;
+  border-top:4px solid #5D97D8;
+  border-left:4px solid #5D97D8;
+  transform:rotate(45deg);
+  margin-top:6px;
+}
+
+.back-to-top:hover{ transform:translateY(0); }
+
+.back-to-top.is-show{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
