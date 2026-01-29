@@ -1,0 +1,640 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#fdfeb2; 
+  overflow-x:hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23599eeb" opacity="0.8"/><circle cx="12" cy="12" r="6" fill="%23599eeb"/></svg>') 12 12, auto;
+}
+
+/* hover 가능한 요소에 hover 시 흰색 원형 커서 흐리게 */
+a, button, .hotspot, .rolling-box{
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="white" opacity="0.5"/><circle cx="12" cy="12" r="6" fill="white" opacity="0.5"/></svg>') 12 12, pointer;
+}
+
+.stage{
+  width:1920px;
+  margin:0 auto;
+  background:#fdfeb2;
+  position:relative;
+  padding-right: 40px;
+}
+
+.stack{font-size:0; line-height:0;}
+
+/* ✅ 아래→위로 올라오는 리빌 */
+.slice{
+  width:100%;
+  height:auto;
+  display:block;
+
+  opacity:0;
+  transform:translateY(70px);
+  transition:opacity .7s ease-out, transform .7s ease-out;
+  will-change:opacity, transform;
+}
+.slice.is-in{opacity:1; transform:translateY(0);}
+
+/* images_13_05는 원래 속도로 */
+.slice[src*="images_13_05"]{
+  transition:opacity .75s ease-out, transform .75s ease-out;
+}
+
+/* footer 역할 - images_11, images_12는 애니메이션 없음 */
+.slice[src*="images_11"],
+.slice[src*="images_12"]{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* images_11 배경 이미지도 바로 보이게 */
+.images-11-bg{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* =========================
+   ✅ 특정 슬라이스 위에 요소 얹기용 wrap
+========================== */
+.slice-wrap{
+  position:relative;
+  width:100%;
+}
+.slice-wrap > img{display:block;}
+
+/* ✅ images_04 wrap */
+.images-04-wrap{
+  position: relative;
+  width: 100%;
+  left: 55%;
+  transform: translateX(-55%);
+}
+.images-04-wrap > .slice{position: relative; transform: translateY(70px);}
+.images-04-wrap > .slice.is-in{transform: translateY(0);}
+
+.images-04-wrap .v-sticker-reverse{
+  position: absolute;
+  left: 58%;
+  top: 38%;
+  width: 160px;
+  height: auto;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(-100px) rotate(15deg);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index: 20;
+}
+.images-04-wrap.is-in .v-sticker-reverse{
+  opacity: 1;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(0) rotate(8deg);
+  transition-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .slice{transition:none; transform:none; opacity:1;}
+}
+
+.hotspots{
+  position:absolute;
+  left:0; top:0;
+  width:1920px;
+  height:100%;
+  pointer-events:none;
+  z-index:35;
+}
+.hotspot{
+  position:absolute;
+  display:block;
+  pointer-events:auto;
+  z-index:35;
+}
+
+.arrow-img{position:relative;}
+.arrow-img .a2{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  height:22px;
+  width:auto;
+  left:140px;
+  opacity:0;
+  transition:.25s ease;
+  pointer-events:none;
+}
+.arrow-img:hover .a2{opacity:1; left:150px;}
+
+/* ✅ images_01 위에 스티커 얹기 */
+.hero-wrap{position: relative; width: 100%;}
+.hero-wrap > img{display:block;}
+
+.hero-sticker{
+  position: absolute;
+  left: 65%;
+  top: 50%;
+  width: 195px;
+  height: 195px;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: spin 6s linear infinite;
+  pointer-events:none;
+  z-index: 20;
+  will-change: transform;
+}
+@keyframes spin{
+  from{ transform: translate(-50%, -50%) rotate(0deg); }
+  to  { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ✅ images_13_05 위에 V모양 스티커 */
+.photo-wrap{position: relative; width: 100%;}
+.photo-wrap > img{display:block;}
+
+.v-sticker{
+  position: absolute;
+  left: 67%;
+  top: 60%;
+  width: 90px;
+  height: auto;
+  transform: translate(-50%, -50%) translateY(-100px) rotate(-15deg);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index: 50;
+}
+.photo-wrap.is-in .v-sticker{
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0) rotate(-8deg);
+  transition-delay: 0.3s;
+}
+
+.pink-underline-box{
+  position: absolute;
+  left: 30%;
+  top: 86%;
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin: left center;
+  width: 1020px;
+  height: 30px;
+  background-color: #febde9;
+  opacity: 0.6;
+  z-index: 15;
+  pointer-events: none;
+  margin-top: -15px;
+  transition: transform 0.8s ease-out;
+}
+.images-04-wrap.is-in .pink-underline-box{
+  transform: translate(-50%, -50%) scaleX(1);
+  transition-delay: 0.3s;
+}
+
+/* =========================================
+   ✅ [추가] 롤링(캐러셀) 박스
+========================================= */
+.rolling-box{
+  position:absolute;
+  left: 669px;
+  top: 895px;
+  width: 570px;
+  height: 445px;
+  background: transparent;
+  overflow:hidden;
+  z-index: 30;
+  pointer-events:auto;
+}
+
+.rolling-box-2{
+  left: 669px;
+  top: 1600px;   
+  width: 570px;
+  height: 445px;
+}
+
+.rolling-box-2 .rolling-slide img{
+  object-position: center 20%;
+}
+
+.rolling-viewport{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+.rolling-track{
+  display:flex;
+  height:100%;
+  transform: translateX(0);
+  transition: transform 700ms ease;
+  will-change: transform;
+}
+.rolling-slide{
+  flex: 0 0 100%;
+  height:100%;
+}
+.rolling-slide img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+/* 버튼(원본 코드에 정의가 일부 빠져있어서 유지하려면 아래 기본값 필요) */
+.rolling-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:rgba(255,255,255,0.65);
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  font-size:26px;
+  line-height:42px;
+  opacity:0;
+  transition:opacity .2s ease, transform .15s ease;
+}
+.rolling-box:hover .rolling-btn{ opacity: 1; }
+.rolling-btn.prev{left:10px;}
+.rolling-btn.next{right:10px;}
+.rolling-btn:active{transform:translateY(-50%) scale(0.96);}
+
+/* ✅ 롤링 박스도 images_13_05와 함께 리빌되게 */
+.rolling-box.reveal-sync{
+  opacity: 0;
+  transform: translateY(70px);
+  transition: opacity .8s ease-out, transform .8s ease-out;
+  will-change: opacity, transform;
+  transition-delay: 0.5s;
+}
+.rolling-box.reveal-sync.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   images_11 GOOD VIBES 롤링
+========================= */
+.images-11-wrap{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 배경 */
+.images-11-bg{
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  width:100%;
+  display:block;
+}
+
+/* 마퀴 영역 */
+.goodvibes-marquee{
+  position:absolute;
+  left:0;
+  bottom:10px;
+  width:100%;
+  overflow:hidden;
+  z-index:20;
+}
+
+/* 롤링 트랙 */
+.goodvibes-track{
+  display:flex;
+  width:max-content;
+  animation: goodvibes-scroll 50s linear infinite;
+}
+
+/* 텍스트 이미지 */
+.goodvibes-track img{
+  height:48px;
+  margin-right:60px;
+  display:block;
+}
+
+/* 가로 무한 스크롤 */
+@keyframes goodvibes-scroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#fdfeb2; 
+  overflow-x:hidden;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23599eeb" opacity="0.8"/><circle cx="12" cy="12" r="6" fill="%23599eeb"/></svg>') 12 12, auto;
+}
+
+/* hover 가능한 요소에 hover 시 흰색 원형 커서 흐리게 */
+a, button, .hotspot, .rolling-box{
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="white" opacity="0.5"/><circle cx="12" cy="12" r="6" fill="white" opacity="0.5"/></svg>') 12 12, pointer;
+}
+
+.stage{
+  width:1920px;
+  margin:0 auto;
+  background:#fdfeb2;
+  position:relative;
+  padding-right: 40px;
+}
+
+.stack{font-size:0; line-height:0;}
+
+/* ✅ 아래→위로 올라오는 리빌 */
+.slice{
+  width:100%;
+  height:auto;
+  display:block;
+
+  opacity:0;
+  transform:translateY(70px);
+  transition:opacity .7s ease-out, transform .7s ease-out;
+  will-change:opacity, transform;
+}
+.slice.is-in{opacity:1; transform:translateY(0);}
+
+/* images_13_05는 원래 속도로 */
+.slice[src*="images_13_05"]{
+  transition:opacity .75s ease-out, transform .75s ease-out;
+}
+
+/* footer 역할 - images_11, images_12는 애니메이션 없음 */
+.slice[src*="images_11"],
+.slice[src*="images_12"]{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* images_11 배경 이미지도 바로 보이게 */
+.images-11-bg{
+  opacity:1 !important;
+  transform:none !important;
+  transition:none !important;
+}
+
+/* =========================
+   ✅ 특정 슬라이스 위에 요소 얹기용 wrap
+========================== */
+.slice-wrap{
+  position:relative;
+  width:100%;
+}
+.slice-wrap > img{display:block;}
+
+/* ✅ images_04 wrap */
+.images-04-wrap{
+  position: relative;
+  width: 100%;
+  left: 55%;
+  transform: translateX(-55%);
+}
+.images-04-wrap > .slice{position: relative; transform: translateY(70px);}
+.images-04-wrap > .slice.is-in{transform: translateY(0);}
+
+.images-04-wrap .v-sticker-reverse{
+  position: absolute;
+  left: 58%;
+  top: 38%;
+  width: 160px;
+  height: auto;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(-100px) rotate(15deg);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index: 20;
+}
+.images-04-wrap.is-in .v-sticker-reverse{
+  opacity: 1;
+  transform: translate(-50%, -50%) scaleX(-1) translateY(0) rotate(8deg);
+  transition-delay: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .slice{transition:none; transform:none; opacity:1;}
+}
+
+.hotspots{
+  position:absolute;
+  left:0; top:0;
+  width:1920px;
+  height:100%;
+  pointer-events:none;
+  z-index:35;
+}
+.hotspot{
+  position:absolute;
+  display:block;
+  pointer-events:auto;
+  z-index:35;
+}
+
+.arrow-img{position:relative;}
+.arrow-img .a2{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  height:22px;
+  width:auto;
+  left:140px;
+  opacity:0;
+  transition:.25s ease;
+  pointer-events:none;
+}
+.arrow-img:hover .a2{opacity:1; left:150px;}
+
+/* ✅ images_01 위에 스티커 얹기 */
+.hero-wrap{position: relative; width: 100%;}
+.hero-wrap > img{display:block;}
+
+.hero-sticker{
+  position: absolute;
+  left: 65%;
+  top: 50%;
+  width: 195px;
+  height: 195px;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  animation: spin 6s linear infinite;
+  pointer-events:none;
+  z-index: 20;
+  will-change: transform;
+}
+@keyframes spin{
+  from{ transform: translate(-50%, -50%) rotate(0deg); }
+  to  { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ✅ images_13_05 위에 V모양 스티커 */
+.photo-wrap{position: relative; width: 100%;}
+.photo-wrap > img{display:block;}
+
+.v-sticker{
+  position: absolute;
+  left: 67%;
+  top: 60%;
+  width: 90px;
+  height: auto;
+  transform: translate(-50%, -50%) translateY(-100px) rotate(-15deg);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events:none;
+  z-index: 50;
+}
+.photo-wrap.is-in .v-sticker{
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0) rotate(-8deg);
+  transition-delay: 0.3s;
+}
+
+.pink-underline-box{
+  position: absolute;
+  left: 30%;
+  top: 86%;
+  transform: translate(-50%, -50%) scaleX(0);
+  transform-origin: left center;
+  width: 1020px;
+  height: 30px;
+  background-color: #febde9;
+  opacity: 0.6;
+  z-index: 15;
+  pointer-events: none;
+  margin-top: -15px;
+  transition: transform 0.8s ease-out;
+}
+.images-04-wrap.is-in .pink-underline-box{
+  transform: translate(-50%, -50%) scaleX(1);
+  transition-delay: 0.3s;
+}
+
+/* =========================================
+   ✅ [추가] 롤링(캐러셀) 박스
+========================================= */
+.rolling-box{
+  position:absolute;
+  left: 669px;
+  top: 895px;
+  width: 570px;
+  height: 445px;
+  background: transparent;
+  overflow:hidden;
+  z-index: 30;
+  pointer-events:auto;
+}
+
+.rolling-box-2{
+  left: 669px;
+  top: 1600px;   
+  width: 570px;
+  height: 445px;
+}
+
+.rolling-box-2 .rolling-slide img{
+  object-position: center 20%;
+}
+
+.rolling-viewport{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+.rolling-track{
+  display:flex;
+  height:100%;
+  transform: translateX(0);
+  transition: transform 700ms ease;
+  will-change: transform;
+}
+.rolling-slide{
+  flex: 0 0 100%;
+  height:100%;
+}
+.rolling-slide img{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  display:block;
+}
+
+/* 버튼(원본 코드에 정의가 일부 빠져있어서 유지하려면 아래 기본값 필요) */
+.rolling-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:rgba(255,255,255,0.65);
+  width:42px;
+  height:42px;
+  border-radius:999px;
+  font-size:26px;
+  line-height:42px;
+  opacity:0;
+  transition:opacity .2s ease, transform .15s ease;
+}
+.rolling-box:hover .rolling-btn{ opacity: 1; }
+.rolling-btn.prev{left:10px;}
+.rolling-btn.next{right:10px;}
+.rolling-btn:active{transform:translateY(-50%) scale(0.96);}
+
+/* ✅ 롤링 박스도 images_13_05와 함께 리빌되게 */
+.rolling-box.reveal-sync{
+  opacity: 0;
+  transform: translateY(70px);
+  transition: opacity .8s ease-out, transform .8s ease-out;
+  will-change: opacity, transform;
+  transition-delay: 0.5s;
+}
+.rolling-box.reveal-sync.is-in{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================
+   images_11 GOOD VIBES 롤링
+========================= */
+.images-11-wrap{
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 배경 */
+.images-11-bg{
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  width:100%;
+  display:block;
+}
+
+/* 마퀴 영역 */
+.goodvibes-marquee{
+  position:absolute;
+  left:0;
+  bottom:10px;
+  width:100%;
+  overflow:hidden;
+  z-index:20;
+}
+
+/* 롤링 트랙 */
+.goodvibes-track{
+  display:flex;
+  width:max-content;
+  animation: goodvibes-scroll 50s linear infinite;
+}
+
+/* 텍스트 이미지 */
+.goodvibes-track img{
+  height:48px;
+  margin-right:60px;
+  display:block;
+}
+
+/* 가로 무한 스크롤 */
+@keyframes goodvibes-scroll{
+  from{ transform: translateX(0); }
+  to{ transform: translateX(-50%); }
+}
