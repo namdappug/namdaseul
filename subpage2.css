@@ -10,26 +10,26 @@ body{-ms-overflow-style:none; scrollbar-width:none;}
 
 /* =========================
    FIRST SECTION (about1-1)
-   - 이미지 상단 기준 꽉차게
+   - ✅ 이미지 전체 보이기(안 잘림)
+   - ✅ 첫 장은 일반 스크롤(원스크 강제 X)
 ========================= */
 .first-section{
   width:100%;
-  height:100vh;
-  min-height:100vh;
+  height:auto;          /* ✅ 100vh 제거 */
+  min-height:0;         /* ✅ 불필요 */
   position:relative;
   z-index:1;
-  overflow:hidden;
-  display:flex;
-  align-items:flex-start;
-  justify-content:center;
+  overflow:visible;     /* ✅ 숨김 제거 */
+  display:block;        /* ✅ flex 제거 */
 }
+
 .first-section img{
   width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:top center;
+  height:auto;          /* ✅ 비율 유지 */
   display:block;
+  object-fit:unset;     /* ✅ cover/contain 영향 제거 */
 }
+
 
 /* =========================
    ONEPAGE
